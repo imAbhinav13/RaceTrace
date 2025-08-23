@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+*.egg
+dist/
+build/
+.env
+.venv
+venv/
+ENV/
+env/
+pip-wheel-metadata/
+*.log
+
+# --- Jupyter / IPython ---
+.ipynb_checkpoints/
+
+# --- VS Code ---
+.vscode/
+.history/
+*.code-workspace
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Streamlit ---
+.streamlit/
+
+# --- Testing ---
+.coverage
+.pytest_cache/
+htmlcov/
+
+# --- Data (optional, in case you cache F1 data locally) ---
+cache/
+data/
+*.parquet
+*.feather
+*.csv
+
+
+# Python environments
+myvenv
