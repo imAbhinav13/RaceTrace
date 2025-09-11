@@ -47,3 +47,6 @@ data/
 
 # Python environments
 myvenv
+
+tests/
+notebooks/ 
