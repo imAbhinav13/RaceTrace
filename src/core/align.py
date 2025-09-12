@@ -7,7 +7,7 @@ import warnings
     Handles missing numeric columns gracefully.
 """
 
-def resample_by_distance(df: pd.DataFrame, n_points: int = 1500) -> pd.DataFrame:
+def resample_by_distance(df: pd.DataFrame, n_points: int = 800) -> pd.DataFrame:
     
     if 'Distance' not in df.columns:        #Check if Distance exists--> X-axis of Distance traveled (in meters). -->If missing → stop and raise error.
         raise ValueError("Telemetry dataframe must have a 'Distance' column")
