@@ -1,7 +1,7 @@
 import os
 import fastf1
 
-def enable_cache(cache_dir="src/data/cache"): 
+def enable_cache(cache_dir="data/cache"): 
     # Ensure the folder exists
     os.makedirs(cache_dir, exist_ok=True)   
     fastf1.Cache.enable_cache(cache_dir)    

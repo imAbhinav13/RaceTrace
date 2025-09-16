@@ -22,6 +22,11 @@ def resample_by_distance(df: pd.DataFrame, n_points: int = 800) -> pd.DataFrame:
             try:
                 df_resampled[col] = np.interp(distance_new, df['Distance'], df[col]) # doing interpolation = estimating values between known data points.
                                                                                     #np.interp(x_new, x_old, y_old) bacailly cal new 
+
+                # special case for gear → round + int
+                if col == "nGear":
+                    df_resampled[col] = df_resampled[col].round().astype(int)
+                                                                                  
             except Exception as e:
                 warnings.warn(f"Could not interpolate column '{col}': {e}")
         else:

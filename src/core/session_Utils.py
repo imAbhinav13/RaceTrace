@@ -42,12 +42,26 @@ def get_telemetry_all_laps(session,driver_code:str): #for all laps
     driver_laps = get_laps(session, driver_code)
     all_telemetry = []
 
-    for lap_number, lap in driver_laps.iterlaps():  # iterlaps() gives Lap objects
+    for _, lap in driver_laps.iterlaps():  # iterlaps() gives Lap objects
         lap_telemetry = lap.get_car_data().add_distance()# telemetry for this lap
         lap_telemetry = resample_by_distance(lap_telemetry) # resample along distance
         all_telemetry.append(lap_telemetry)
 
     return all_telemetry
+
+#A function to fetch telemetry only for a specific lap of a driver
+def get_telemetry_specific_lap(session,driver_code:str, lap_no):
+    # Get all laps for this driver
+    driver_laps = get_laps(session, driver_code)
+
+    # Select the requested lap
+    lap=driver_laps.loc[driver_laps['LapNumber'] == lap_no].iloc[0]
+
+    # Get telemetry and align by distance
+    lap_telemetry = lap.get_car_data().add_distance()
+    lap_telemetry = resample_by_distance(lap_telemetry)
+
+    return lap_telemetry
 
 #Return resampled telemetry for the driver's fastest lap.
 def get_telemetry_fastest_lap(session,driver_code:str):
