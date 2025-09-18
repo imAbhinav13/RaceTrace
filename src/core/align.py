@@ -18,7 +18,19 @@ def resample_by_distance(df: pd.DataFrame, n_points: int = 800) -> pd.DataFrame:
     for col in df.columns:
         if col == "Distance":
             continue
-        if np.issubdtype(df[col].dtype, np.number):     
+
+        # Special handling for Time column
+        if col == "Time":
+            # Convert to seconds if timedelta
+            if pd.api.types.is_timedelta64_dtype(df[col]):
+                df_col = df[col].dt.total_seconds()
+            else:
+                df_col = df[col]
+            df_resampled[col] = np.interp(distance_new, df['Distance'], df_col)
+            continue
+
+        if np.issubdtype(df[col].dtype, np.number):
+            
             try:
                 df_resampled[col] = np.interp(distance_new, df['Distance'], df[col]) # doing interpolation = estimating values between known data points.
                                                                                     #np.interp(x_new, x_old, y_old) bacailly cal new 
