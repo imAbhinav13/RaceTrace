@@ -2,10 +2,7 @@ import numpy as np
 import pandas as pd
 import warnings
 
-"""
-    Resample lap telemetry to have fixed number of points based on distance.
-    Handles missing numeric columns gracefully.
-"""
+
 
 def resample_by_distance(df: pd.DataFrame, n_points: int = 800) -> pd.DataFrame:
     
@@ -28,6 +25,16 @@ def resample_by_distance(df: pd.DataFrame, n_points: int = 800) -> pd.DataFrame:
                 df_col = df[col]
             df_resampled[col] = np.interp(distance_new, df['Distance'], df_col)
             continue
+
+        # Special handling for Brake (boolean to float 0/1) 
+        if col == "Brake":
+            try:
+                df_col = df[col].astype(float)   # Convert True/False tp 1.0/0.0
+                df_resampled[col] = np.interp(distance_new, df['Distance'], df_col)
+            except Exception as e:
+                warnings.warn(f"Could not process 'Brake': {e}")
+            continue
+
 
         if np.issubdtype(df[col].dtype, np.number):
             
